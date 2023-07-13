@@ -7,8 +7,8 @@ using System.Text;
 using System.Web.Script.Serialization;
 using Newtonsoft.Json;
 using static PayClientHelper.KICC_API0001_REQUEST;
-using static PayClientHelper.KICC_API0003_REQUEST;
 using PayClientHelper;
+using static PayClientHelper.KICC_API0003_REQUEST;
 using static PayClientHelper.KICC_API0005_REQUEST;
 
 namespace KWFLE.BO.Web.Controllers
@@ -41,7 +41,7 @@ namespace KWFLE.BO.Web.Controllers
         //    foreach (var item in result.body)
         //    {
         //        Console.WriteLine(item.MB_CST_NM);
-        //    }            
+        //    }
         //    #endregion
         //}
 
@@ -70,8 +70,9 @@ namespace KWFLE.BO.Web.Controllers
                 body.directRegInfo.payCode = PayCommonConstant.KICC_PAYCODE_ALL;
                 body.directRegInfo.rcvMobileNo = directRegInfo.rcvMobileNo;                //고객전화번호(-)없이
                 body.directRegInfo.sndTelNo = directRegInfo.sndTelNo;                      //보내는사람전화번호(-)없이
-                body.directRegInfo.mallName = "AICANDO CLASS " + directRegInfo.mallName;   //교실명                
-                body.directRegInfo.smsPayExpr = DateTime.Now.Date.AddMonths(1).AddDays(-1).ToString("yyyyMMdd") + "235959";
+                body.directRegInfo.mallName = "AICANDO CLASS " + directRegInfo.mallName;   //교실명    
+                DateTime nextMonthFirstDay = DateTime.Now.AddDays(1 - DateTime.Now.Day);                
+                body.directRegInfo.smsPayExpr = nextMonthFirstDay.AddMonths(1).AddDays(-1).ToString("yyyyMMdd") + "235959";
                 body.directRegInfo.dispMsg = directRegInfo.dispMsg;                        //문구 (교원 아이캔두클래스 수강료(9월분) 결제)
                 #endregion
 
@@ -183,7 +184,8 @@ namespace KWFLE.BO.Web.Controllers
                 #endregion
 
                 #region 결제 방법정보                
-                body.payMethodInfo.virtualAccountMethodInfo.expiryDate = DateTime.Now.Date.AddMonths(1).AddDays(-1).ToString("yyyyMMdd");
+                DateTime nextMonthFirstDay = DateTime.Now.AddDays(1 - DateTime.Now.Day);
+                body.payMethodInfo.virtualAccountMethodInfo.expiryDate = nextMonthFirstDay.AddMonths(1).AddDays(-1).ToString("yyyyMMdd");
                 body.payMethodInfo.virtualAccountMethodInfo.expiryTime = "235959";
                 #endregion
 
@@ -248,9 +250,9 @@ namespace KWFLE.BO.Web.Controllers
                 else
                 {
                     return Content("<script>alert('인증에 실패하였습니다. " + request.resCd + " : " + request.resMsg + "');opener.location.reload(true); self.close();</script>");
-                }                
+                }
 
-                #endregion   
+                #endregion
             }
             catch (Exception e)
             {
