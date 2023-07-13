@@ -8,4 +8,3 @@ D:\강지환 manager\2.source\ApiClientHelper\PayClientHelper\obj\Debug\PayClien
 D:\강지환 manager\2.source\ApiClientHelper\PayClientHelper\obj\Debug\PayClientHelper.csproj.CopyComplete
 D:\강지환 manager\2.source\ApiClientHelper\PayClientHelper\obj\Debug\PayClientHelper.dll
 D:\강지환 manager\2.source\ApiClientHelper\PayClientHelper\obj\Debug\PayClientHelper.pdb
-D:\강지환 manager\2.source\ApiClientHelper\PayClientHelper\obj\Debug\PayClientHelper.csprojAssemblyReference.cache

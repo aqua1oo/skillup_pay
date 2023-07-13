@@ -49,7 +49,8 @@ namespace PayClientHelper
         public const string KICC_MALLID_AICANDO_SMS = "05575112";
         public const string KICC_MALLID_AICANDO_WINDOW = "05575113";
 
-        public const string KICC_PAY_CANCEL_SECRETKEY = "easypay!0h4VMXT7";
+        public const string KICC_PAY_CANCEL_SECRETKEY_SMS = "easypay!t9wOPnEJ";
+        public const string KICC_PAY_CANCEL_SECRETKEY_WINDOW = "easypay!0h4VMXT7";
 
         #region SMS 결제요청
         public const string KICC_REGTYPE_SMS = "51";

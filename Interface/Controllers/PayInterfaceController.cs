@@ -183,8 +183,8 @@ namespace KWFLE.BO.Web.Controllers
                 #endregion
 
                 #region 결제 방법정보                
-                body.payMethodInfo.virtualAccountMethodInfo.expiryDate = Convert.ToString(DateTime.Now.AddDays(5).ToString("yyyyMMdd"));
-                body.payMethodInfo.virtualAccountMethodInfo.expiryTime = Convert.ToString(DateTime.Now.AddDays(5).ToString("HHmmss"));
+                body.payMethodInfo.virtualAccountMethodInfo.expiryDate = DateTime.Now.Date.AddMonths(1).AddDays(-1).ToString("yyyyMMdd");
+                body.payMethodInfo.virtualAccountMethodInfo.expiryTime = "235959";
                 #endregion
 
                 #region 기타정보
@@ -258,7 +258,9 @@ namespace KWFLE.BO.Web.Controllers
             }
         }
         #endregion
+        #endregion
 
+        #region KICC결제 공통
         #region KICC 결제 NOTI
         public string KiccPayComplete(KICC_API_NOTI request)
         {
@@ -283,7 +285,7 @@ namespace KWFLE.BO.Web.Controllers
                 else
                 {
                     return PayCommonConstant.KICC_RESULT_FAIL;
-                }               
+                }
             }
             catch (Exception e)
             {
@@ -307,13 +309,13 @@ namespace KWFLE.BO.Web.Controllers
 
                 #region 환불 기본정보
                 body.mallId = PayCommonConstant.KICC_MALLID_AICANDO_SMS;                //상점아이디(KICC_MALLID_AICANDO_SMS : SMS결제 취소, KICC_MALLID_AICANDO_WINDOW : 결제창결제 취소)
-                body.shopTransactionId = "KYOWONAICANDOPAYCANCELSEQ_" + request.pgCno + DateTime.Now.ToString("yyyyMMddhhmmss"); ;
+                body.shopTransactionId = "KYOWONAICANDOPAYCANCELSEQ_" + request.pgCno + DateTime.Now.ToString("yyyyMMddhhmmss");
                 body.pgCno = request.pgCno;                                             //원거래번호
                 body.reviseTypeCode = PayCommonConstant.KICC_REVISETYPECODE_REFUND;
                 body.amount = request.amount;                                           //취소금액
                 body.clientIp = System.Web.HttpContext.Current.Request.UserHostAddress;
                 body.clientId = System.Web.HttpContext.Current.Request.UserHostAddress; //user정보
-                body.msgAuthValue = HmacText.CreateHash(request.pgCno + "|" + body.shopTransactionId, PayCommonConstant.KICC_PAY_CANCEL_SECRETKEY);
+                body.msgAuthValue = HmacText.CreateHash(request.pgCno + "|" + body.shopTransactionId, PayCommonConstant.KICC_PAY_CANCEL_SECRETKEY_SMS); //암복화키 (SMS결제취소/환불 : KICC_PAY_CANCEL_SECRETKEY_SMS, 결제창결제취소/환불 : KICC_PAY_CANCEL_SECRETKEY_WINDOW)
                 body.cancelReqDate = DateTime.Now.ToString("yyyyMMdd");
                 #endregion
 
